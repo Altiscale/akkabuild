@@ -20,8 +20,8 @@ pushd ${WORKSPACE}
 
 # This is a hack to just package the JAR before we can build it correctly
 # hack_target should exist already with the JARs we need
-export RPM_NAME=`echo scala-akka-${BUILD_BRANCH}`
-export RPM_DESCRIPTION="scala-akka library ${BUILD_BRANCH}"
+export RPM_NAME=`echo com.typesafe.akka-actor-${BUILD_BRANCH}`
+export RPM_DESCRIPTION="com.typesafe.akka akka-actor library ${BUILD_BRANCH}"
 
 ##################
 # Packaging  RPM #
@@ -31,13 +31,16 @@ export RPM_BUILD_DIR="${INSTALL_DIR}/usr/sap/spark/controller/"
 rm -rf "${RPM_BUILD_DIR}"
 mkdir --mode=0755 -p "${RPM_BUILD_DIR}"
 
+# com.typesafe.akka-actor_2.1X-*.jar are a custom name we defined for oursevles
+# to distinguish their Scala version's, etc. when we download them from Maven
+# and these are NOT built from source.
 pushd hack_target
 if [[ "$BUILD_BRANCH" == *_2.10 ]] ; then
   mkdir --mode=0755 -p "${RPM_BUILD_DIR}/lib"
-  cp -rp scala-akka_2.10-*.jar $RPM_BUILD_DIR/lib/
+  cp -rp com.typesafe.akka-actor_2.10-*.jar $RPM_BUILD_DIR/lib/
 elif [[ "$BUILD_BRANCH" == *_2.11 ]] ; then
   mkdir --mode=0755 -p "${RPM_BUILD_DIR}/lib_2.11"
-  cp -rp scala-akka_2.11-*.jar $RPM_BUILD_DIR/lib_2.11/
+  cp -rp com.typesafe.akka-actor_2.11-*.jar $RPM_BUILD_DIR/lib_2.11/
 else
   echo "fatal - unsupported version for $BUILD_BRANCH, can't produce RPM, quitting!"
   exit -1

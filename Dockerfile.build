@@ -1,0 +1,11 @@
+FROM buildenv-java8
+
+WORKDIR /home/jenkins-slave/build
+
+ADD build_package.sh /home/jenkins-slave/build_package.sh
+RUN chmod a+rx /home/jenkins-slave/build_package.sh
+RUN chown jenkins-slave:jenkins-slave /home/jenkins-slave/build_package.sh && \
+    mkdir -p /home/jenkins-slave/build && \
+    chown -R jenkins-slave:jenkins-slave /home/jenkins-slave/build
+USER jenkins-slave
+CMD /home/jenkins-slave/build_package.sh
