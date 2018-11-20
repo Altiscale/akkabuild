@@ -1,4 +1,4 @@
 [submodule "akka"]
 	path = akka
 	url = https://github.com/Altiscale/akka.git
-	branch = alti-v2.3.16
+	branch = alti-v2.3.16_2.11
