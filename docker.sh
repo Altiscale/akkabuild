@@ -6,9 +6,10 @@ BUILD_BRANCH=${BUILD_BRANCH:-"alti-v2.3.16_2.11"}
 DOCKER_BASE_IMAGE_NAME=buildenv-java8
 BUILD_USER=jenkins-slave
 
-# 0. clean up old images due to uid:gid fluctuates
-docker rmi -f "${DOCKER_BASE_IMAGE_NAME}"
-docker rmi -f "${DOCKER_RPMBUILD_IMAGE_NAME}"
+# 0. clean up old images due to uid:gid fluctuates.
+# always return true b/c we don't care if image isn't found
+docker 2>/dev/null rmi -f "${DOCKER_BASE_IMAGE_NAME}" | true
+docker 2>/dev/null rmi -f "${DOCKER_RPMBUILD_IMAGE_NAME}" | true
 
 # 1. build docker (compile environment)
 docker build \
