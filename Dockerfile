@@ -2,8 +2,11 @@
 FROM docker-dev.artifactory.service.altiscale.com/hercules
 WORKDIR /root
 
-RUN groupadd -g 500 jenkins-slave
-RUN useradd -u 500 -g 500 -ms /bin/bash jenkins-slave
+ARG JB_UID
+ARG JB_GID
+
+RUN groupadd -g $JB_GID jenkins-slave
+RUN useradd -u $JB_UID -g $JB_GID -ms /bin/bash jenkins-slave
 RUN mkdir -p /home/jenkins-slave/build
 RUN chown jenkins-slave:jenkins-slave /home/jenkins-slave/build
 ENV DOCKER_WORKSPACE /home/jenkins-slave/build

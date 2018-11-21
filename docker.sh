@@ -13,6 +13,8 @@ docker 2>/dev/null rmi -f "${DOCKER_RPMBUILD_IMAGE_NAME}" | true
 
 # 1. build docker (compile environment)
 docker build \
+  --build-arg JB_UID=$(id -u) \
+  --build-arg JB_GID=$(id -g) \
   -t ${DOCKER_BASE_IMAGE_NAME} \
   -f Dockerfile \
   .
