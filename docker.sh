@@ -6,6 +6,10 @@ BUILD_BRANCH=${BUILD_BRANCH:-"alti-v2.3.16_2.11"}
 DOCKER_BASE_IMAGE_NAME=buildenv-java8
 BUILD_USER=jenkins-slave
 
+# 0. clean up old images due to uid:gid fluctuates
+docker rmi -f "${DOCKER_BASE_IMAGE_NAME}"
+docker rmi -f "${DOCKER_RPMBUILD_IMAGE_NAME}"
+
 # 1. build docker (compile environment)
 docker build \
   -t ${DOCKER_BASE_IMAGE_NAME} \
@@ -25,6 +29,8 @@ DOCKER_RPMBUILD_IMAGE_NAME="${PACKAGE_NAME}build:latest"
 echo "DOCKER_RPMBUILD_IMAGE_NAME: ${DOCKER_RPMBUILD_IMAGE_NAME}"
 
 docker build \
+  --build-arg JB_UID=$(id -u) \
+  --build-arg JB_GID=$(id -g) \
   -t "${DOCKER_RPMBUILD_IMAGE_NAME}" \
   -f Dockerfile.build \
   .
