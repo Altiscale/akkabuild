@@ -12,3 +12,6 @@ Adding submodules
 ```
 git submodule add -b alti-v2.3.16 https://github.com/Altiscale/akka.git
 ```
+
+IF you run `docker.sh` locally on your Mac, it will not work due to `id -g` is showing an existing
+GID (e.g. `20`) that conflicts with an existing GID already in the base image.
