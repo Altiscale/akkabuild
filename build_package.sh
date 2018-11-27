@@ -47,7 +47,7 @@ else
 fi
 popd
 mkdir -p "${RPM_BUILD_DIR}/licenses"
-cp LICENSE "${RPM_BUILD_DIR}/licenses/"
+cp LICENSE "${RPM_BUILD_DIR}/licenses/LICENSE-${RPM_NAME}"
 
 mkdir -p ${RPM_DIR}
 pushd ${RPM_DIR}
